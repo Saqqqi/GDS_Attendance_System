@@ -57,7 +57,6 @@ function Login() {
           isLoggedIn: 'true', // Add static values as needed
         };
     
-        // Store each key-value pair in localStorage
         Object.entries(storageData).forEach(([key, value]) => {
           localStorage.setItem(key, value);
         });

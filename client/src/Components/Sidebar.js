@@ -6,13 +6,12 @@ import logo from '../assets/images/logo.png';
 import logoutIcon from '../assets/images/logout-icon.png';
 
 const Sidebar = () => {
-  // Retrieve the role and is_break_in flag from localStorage
+  // Retrieve the role from localStorage
   const role = localStorage.getItem('Role'); // Assuming 'role' is stored in localStorage
-  const isBreakIn = localStorage.getItem('is_break_in') === 'true'; // Check if break is active
 
-  // Define menu items based on the role
   const menuItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <AiOutlineHome /> },
+    // Only include the "Employee Registration" item if the role is "Admin"
     ...(role === 'Admin'
       ? [{ name: 'Employee Registration', path: '/employee-registration', icon: <AiOutlineUser /> }]
       : []),
@@ -26,27 +25,21 @@ const Sidebar = () => {
       </div>
       <nav className="flex-1">
         <ul>
-          {!isBreakIn ? (
-            menuItems.map((item) => (
-              <li key={item.name} className="mb-2">
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center px-4 py-3 space-x-3 hover:bg-gray-700 ${
-                      isActive ? 'bg-gray-700' : ''
-                    }`
-                  }
-                >
-                  <span className="text-2xl">{item.icon}</span>
-                  <span>{item.name}</span>
-                </NavLink>
-              </li>
-            ))
-          ) : (
-            <li className="text-center text-gray-400 py-4">
-              Menu disabled during break.
+          {menuItems.map((item) => (
+            <li key={item.name} className="mb-2">
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-3 space-x-3 hover:bg-gray-700 ${
+                    isActive ? 'bg-gray-700' : ''
+                  }`
+                }
+              >
+                <span className="text-2xl">{item.icon}</span>
+                <span>{item.name}</span>
+              </NavLink>
             </li>
-          )}
+          ))}
         </ul>
       </nav>
       <footer className="px-6 py-4 text-sm text-gray-400">

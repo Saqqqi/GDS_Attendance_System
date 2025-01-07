@@ -13,7 +13,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Database connected successfully');
@@ -26,12 +25,11 @@ app.use(EmployeeRegisterRoute);
 app.use(AuthRoute);
 app.use(uploadRoutes);
 app.use(breakRoutes);
-// API endpoint to record attendance
+
 app.get("/", async (req, res) => {
   res.status(200).json({ message: "This is a backend data.!" });
 });
 
-// Start the Express server
 app.listen(5000, () => {
   console.log("Backend server running on http://localhost:5000");
 });

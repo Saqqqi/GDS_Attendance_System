@@ -12,8 +12,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('');
 
+  // Check login status and role on component mount
   useEffect(() => {
-    // Check if the user is logged in and get their role from localStorage
     const employeeId = localStorage.getItem('employeeId');
     const roleFromStorage = localStorage.getItem('Role');
 
@@ -24,14 +24,10 @@ const App = () => {
   }, []);
 
   // Route protection logic
-  const ProtectedRoute = ({ element, ...props }) => {
+  const AdminRoute = ({ element }) => {
     if (!isLoggedIn) {
       return <Navigate to="/login" />;
     }
-    return element;
-  };
-
-  const AdminRoute = ({ element, ...props }) => {
     if (role !== 'Admin') {
       return <Navigate to="/dashboard" />;
     }
@@ -41,10 +37,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Login Route */}
-        <Route exact path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
+        {/* Public Routes */}
+        <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route exact path="/logout" element={<Logout />} />
+        <Route path="/logout" element={<Logout />} />
 
         {/* Protected Routes */}
         <Route
@@ -56,9 +52,12 @@ const App = () => {
                   path="/dashboard"
                   element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
                 />
-                <Route path="/all-employees" element={<AllEmployees />} />
-                
-                {/* Admin only routes */}
+                <Route
+                  path="/all-employees"
+                  element={isLoggedIn ? <AllEmployees /> : <Navigate to="/login" />}
+                />
+
+                {/* Admin Routes */}
                 <Route
                   path="/employee-registration"
                   element={<AdminRoute element={<EmployeeRegistration />} />}
@@ -73,7 +72,10 @@ const App = () => {
                 />
 
                 {/* Break Route */}
-                <Route path="/break" element={isLoggedIn ? <Break /> : <Navigate to="/login" />} />
+                <Route
+                  path="/break"
+                  element={isLoggedIn ? <Break /> : <Navigate to="/login" />}
+                />
               </Routes>
             </Layout>
           }
