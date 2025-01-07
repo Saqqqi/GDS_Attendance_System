@@ -25,7 +25,6 @@ app.use(EmployeeRegisterRoute);
 app.use(AuthRoute);
 app.use(uploadRoutes);
 app.use(breakRoutes);
-
 app.get("/", async (req, res) => {
   res.status(200).json({ message: "This is a backend data.!" });
 });
