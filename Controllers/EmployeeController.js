@@ -139,11 +139,12 @@ module.exports.createEmployee = async (req, res) => {
             in_time,
             out_time,
             joining_date,
+            role_company,
             CNIC_No,
             role_name
         } = req.body;
 
-        console.log("🔹 Request Body:", { name, email, address, in_time, out_time, joining_date, CNIC_No, role_name });
+        console.log("🔹 Request Body:", { name, email, address, in_time, out_time, joining_date, CNIC_No, role_name ,role_company,});
 
         if (!name || !email || !address || !joining_date) {
             return res.status(400).json({ message: '❌ Missing required fields (name, email, address, joining_date).' });
@@ -168,6 +169,7 @@ module.exports.createEmployee = async (req, res) => {
         employee.address = address || employee.address;
         employee.in_time = in_time || employee.in_time;
         employee.out_time = out_time || employee.out_time;
+        employee.role_company = role_company || employee.role_company;
         employee.joining_date = joining_date || employee.joining_date;
 
         if (CNIC_No && CNIC_No !== employee.CNIC_No) {

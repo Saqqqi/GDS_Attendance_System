@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 const UpdateEmployee = () => {
   const location = useLocation();
   const { id } = useParams();
-  const { employee } = location.state || {}; 
+  const { employee } = location.state || {};
   console.log(employee._id);
   console.log("Employee Record: ", employee)
   const [formData, setFormData] = useState({
@@ -18,6 +18,8 @@ const UpdateEmployee = () => {
     joining_date: '',
     CNIC_No: '',
     designation: '',
+    role_company: ''
+
   });
 
   useEffect(() => {
@@ -32,7 +34,9 @@ const UpdateEmployee = () => {
           ? new Date(employee.joining_date).toISOString().split('T')[0]
           : '',
         CNIC_No: employee.CNIC_No || '',
+
         designation: employee.designation.role || '',
+        role_company: employee.role_company || '',
       });
     }
   }, [employee]);
@@ -176,19 +180,25 @@ const UpdateEmployee = () => {
               <option value="Lead">Lead</option>
             </select>
           </div>
-          {/* <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Contact Number</label>
-          <input
-            type="text"
-            name="contactNumber"
-            placeholder="Enter Contact Number"
-            value={formData.contactNumber}
-            onChange={handleChange}
-            className="w-full border border-[#36BCBA] bg-transparent text-[#36BCBA] rounded px-4 py-2 outline-none"
-          />
-        </div> */}
-        </div>
 
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Company Role</label>
+            <select
+              name="role_company"
+              value={formData.role_company}
+              onChange={handleChange}
+              className="w-full border border-[#36BCBA] bg-gray-800 text-[#36BCBA] rounded px-4 py-2 outline-none appearance-none"
+            >
+              <option value="" disabled>
+                Select Company Role
+              </option>
+              <option value="Admin">Admin</option>
+              <option value="Employee">Employee</option>
+            </select>
+          </div>
+        </div>
         {/* Buttons */}
         <div className="flex justify-end mt-6">
           <button
