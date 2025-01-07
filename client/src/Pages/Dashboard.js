@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { CiMenuKebab } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa6";
 import { RiPresentationFill } from "react-icons/ri";
 import axios from 'axios';
@@ -17,15 +16,13 @@ const Dashboard = () => {
       try {
         const response = await axios.get('http://localhost:5000/attendance/summary');
         const attendance = response.data;
-  
+        console.log(attendance);
         const totalEmployees = attendance[0]?.totalEmployees || 0;
         const attendanceDataLength = attendance.length;
         const leaves = totalEmployees - attendanceDataLength;
-        console.log('Total Employees:', totalEmployees);
-        console.log('Attendance Data Length:', attendanceDataLength);
-        console.log('Leaves:', leaves);
   
         setAttendanceData(attendance);
+        console.log(attendanceData);
         setTotalEmployees(totalEmployees);
         setLeaves(leaves);
       } catch (err) {
@@ -126,8 +123,7 @@ const Dashboard = () => {
                   <th className="px-4 py-2 border border-gray-700">Name</th>
                   <th className="px-4 py-2 border border-gray-700">Login Time</th>
                   <th className="px-4 py-2 border border-gray-700">Logout Time</th>
-                  <th className="px-4 py-2 border border-gray-700">L</th>
-                  <th className="px-4 py-2 border border-gray-700">P</th>
+                  <th className="px-4 py-2 border border-gray-700">Designation</th>
                   <th className="px-4 py-2 border border-gray-700">Date</th>
                   <th className="px-4 py-2 border border-gray-700">Action</th>
                 </tr>
@@ -141,13 +137,14 @@ const Dashboard = () => {
                     <td className="px-4 py-2 border border-gray-700 text-center">
                       {item.logoutTime === "Not Logged Out Yet" ? "-" : item.logoutTime}
                     </td>
-                    <td className="px-4 py-2 border border-gray-700 text-center">Null</td>
-                    <td className="px-4 py-2 border border-gray-700 text-center">1</td>
+                    <td className="px-4 py-2 border border-gray-700 text-center">{item.designation}</td>
                     <td className="px-4 py-2 border border-gray-700 text-center">{item.date}</td>
                     <td className="px-4 py-2 border border-gray-700 text-center">
-                      <button className="text-gray-300 hover:text-teal-500">
-                        <CiMenuKebab />
+                      <Link to={`/attendance/employee/${item.employeeId}`}>
+                      <button className="text-green-500 hover:text-teal-500">
+                        Monthly Details
                       </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

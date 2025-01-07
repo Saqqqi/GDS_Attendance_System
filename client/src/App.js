@@ -7,7 +7,7 @@ import AllEmployees from './Pages/AllEmployees';
 import EmployeeDetail from './Pages/EmployeeDetail';
 import UpdateEmployee from './Pages/UpdateEmployee';
 import Break from './Pages/Break';
-
+import EmployeeAttendance from './Pages/MonthlyAttendeOfEmployee';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('');
@@ -40,6 +40,7 @@ const App = () => {
         {/* Public Routes */}
         <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/attendance/employee/:id" element={<EmployeeAttendance />} />
         <Route path="/logout" element={<Logout />} />
 
         {/* Protected Routes */}
@@ -77,6 +78,7 @@ const App = () => {
                   element={isLoggedIn ? <Break /> : <Navigate to="/login" />}
                 />
               </Routes>
+            
             </Layout>
           }
         />
